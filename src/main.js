@@ -12,11 +12,9 @@ async function getTrendingMoviesPreview() {
   const { data } = await api("trending/movie/day");
   const movies = data.results;
 
-  movies.forEach((movie) => {
-    const trendingPreviewMoviesContainer = document.querySelector(
-      "#trendingPreview .trendingPreview-movieList"
-    );
+  trendingMoviesPreviewList.innerHTML = "";
 
+  movies.forEach((movie) => {
     const movieContainer = document.createElement("div");
     movieContainer.classList.add("movie-container");
 
@@ -29,19 +27,16 @@ async function getTrendingMoviesPreview() {
     );
 
     movieContainer.appendChild(movieImg);
-    trendingPreviewMoviesContainer.appendChild(movieContainer);
+    trendingMoviesPreviewList.appendChild(movieContainer);
   });
 }
 
 async function getCategoriesPreview() {
   const { data } = await api("genre/movie/list");
   const categories = data.genres;
+  categoriesPreviewList.innerHTML = ""; // Solucion a la duplicacion de datos
 
   categories.forEach((category) => {
-    const previewCategoriesContainer = document.querySelector(
-      "#categoriesPreview .categoriesPreview-list"
-    );
-
     const categoryContainer = document.createElement("div");
     categoryContainer.classList.add("category-container");
 
@@ -52,9 +47,9 @@ async function getCategoriesPreview() {
     const categoryTitleText = document.createTextNode(category.name);
     categoryTitle.appendChild(categoryTitleText);
     categoryContainer.appendChild(categoryTitle);
-    previewCategoriesContainer.appendChild(categoryContainer);
+    categoriesPreviewList.appendChild(categoryContainer);
   });
 }
 
-getTrendingMoviesPreview();
-getCategoriesPreview();
+// getTrendingMoviesPreview();
+// getCategoriesPreview();
